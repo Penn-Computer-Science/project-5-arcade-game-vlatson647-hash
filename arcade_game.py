@@ -138,7 +138,7 @@ def spawn_enemy():
     enemy = canvas.create_image(x,0, image=enemy_img)
     enemies.append(enemy)
 def spawn_projectile():
-    x = random.randint(0, 399)
+    x = random.randint(0, WIDTH-20)
     projectile = canvas.create_image(x,0, image=project_img)
     projectiles.append(projectile)
 
@@ -163,10 +163,10 @@ def game_loop():
 
     if py1 < 1 or py2 > 451:
         alive = False
-    if random.randint(1,1)==1:
+    if random.randint(1,2)==1:
         spawn_enemy()
-    # if random.randint(1,5)==1 and SCORE > 4:
-    #     spawn_projectile()
+    if random.randint(1,5)==1 and SCORE > 4:
+        spawn_projectile()
     # if random.randint(1,5)==1:
     #     spawn_projectile()
 
@@ -186,24 +186,33 @@ def game_loop():
         if y2 < 0:
             canvas.delete(l)
             lasers.remove(l)
+    for l in lasers[:]:
+        canvas.move(l, 20,0)
+
+        x1, y1, x2, y2 = canvas.bbox(l)
+
+        if x1 > WIDTH:
+            canvas.delete(l)
+            lasers.remove(l)
+            continue
+
+
+        for e in enemies[:]:
+            if collision(l, e):
+                SCORE += 1
+                label.config(text=f"SCORE: {SCORE}")
+
+                canvas.delete(l)
+                canvas.delete(e)
+
+                lasers.remove(l)
+                enemies.remove(e)
+
+                break
     
 
 
     root.after(30, game_loop)
-
-for l in lasers:
-    for e in enemies:
-        if collision(e,l):
-            SCORE+=1
-            label.config(text=f"SCORE: {SCORE}")
-            canvas.delete(l)
-            canvas.delete(e)
-        if l in lasers:
-            lasers.remove(l)
-        if e in enemies:
-            enemies.remove(e)
-
-        break
 
 
 
