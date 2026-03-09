@@ -131,8 +131,12 @@ root.after(...)
 
   -  Create a README.md in your repo that includes:
       -  Name of your game
+        BLOCK SHOOTERZ
       -  Controls
+        arrow keys to move space to shoot
       -  Short description of how the game works
+        Shoot lasers at the falling aliens but be careful, when you reach 5 score rockets
+        will fall on you which you need to avoid.
    
 <h2 align="center">Stretch Goals</h2>
 
